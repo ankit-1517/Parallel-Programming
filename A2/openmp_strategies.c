@@ -6,10 +6,10 @@ int main(int argc, char const *argv[]){
         printf("Invalid usage. Expected: ./executable fileName n strategy nThreads\n");
         exit(1);
     }
+    nThreads = atoi(argv[4]);
     int n = atoi(argv[2]);
     int strategy = atoi(argv[3]);
-    int nThreads = atoi(argv[4]);
-
+    
     double (*A)[n] = malloc(sizeof(double[n][n]));
     double (*L)[n] = malloc(sizeof(double[n][n]));
     double (*U)[n] = malloc(sizeof(double[n][n]));

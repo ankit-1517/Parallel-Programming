@@ -17,6 +17,10 @@ void write_output(char const fname[], int n, double (*arr)[n]){
 
 void read_input(char const fname[], int n, double (*arr)[n]){
     FILE *f = fopen(fname, "r");
+    if(!f){
+        printf("File %s doesn't exist. Exiting...\n", fname);
+        exit(1);
+    }
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
             fscanf(f, "%lf", &arr[i][j]);
