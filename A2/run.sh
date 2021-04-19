@@ -9,5 +9,6 @@ then
 else
     # OMP
     # ./executable fileName n strategy nThreads
-    ./openmp_strategies $2 $1 $4 $3
+    time ./openmp_strategies $2 $1 $4 $3
+    python3 format_checker.py $2 "output_L_$4_$3.txt" "output_U_$4_$3.txt"
 fi
