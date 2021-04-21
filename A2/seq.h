@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void write_output(char const fname[], int n, double (*arr)[n]){
+void write_output(char const fname[], int n, double **arr){
     FILE *f = fopen(fname, "w");
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
@@ -15,7 +15,7 @@ void write_output(char const fname[], int n, double (*arr)[n]){
     fclose(f);
 }
 
-void read_input(char const fname[], int n, double (*arr)[n]){
+void read_input(char const fname[], int n, double **arr){
     FILE *f = fopen(fname, "r");
     if(!f){
         printf("File %s doesn't exist. Exiting...\n", fname);
@@ -36,7 +36,7 @@ double** allocate_array(int n){
     return arr;
 }
 
-void crout(int n, double (*A)[n], double (*L)[n], double (*U)[n]){
+void crout(int n, double **A, double **L, double **U){
     int i, j, k;
     double sum = 0;
     for(i = 0; i < n; i++){

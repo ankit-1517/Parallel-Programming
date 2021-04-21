@@ -10,9 +10,9 @@ int main(int argc, char const *argv[]){
     int n = atoi(argv[2]);
     int strategy = atoi(argv[3]);
     
-    double (*A)[n] = malloc(sizeof(double[n][n]));
-    double (*L)[n] = malloc(sizeof(double[n][n]));
-    double (*U)[n] = malloc(sizeof(double[n][n]));
+    double **A = allocate_array(n);
+    double **L = allocate_array(n);
+    double **U = allocate_array(n);
 
     read_input(argv[1], n, A);
     
