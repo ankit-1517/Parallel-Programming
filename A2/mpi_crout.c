@@ -32,11 +32,10 @@ int main(int argc, char const *argv[]){
         U[i][i] = 1;
     }
     for(j = 0; j < n; j++){
-        // printf("%d\n", j);
         if(my_rank == master){
             for(i = j; i<n; i++){
-                MPI_Recv(&L[i][j], sizeof(double), MPI_DOUBLE, i%comm_size, n*i + j, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                MPI_Recv(&U[j][i], sizeof(double), MPI_DOUBLE, i%comm_size, n*i + j + 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&L[i][j], 1, MPI_DOUBLE, i%comm_size, n*i + j, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&U[j][i], 1, MPI_DOUBLE, i%comm_size, n*i + j + 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             }
         }
         else{
@@ -48,8 +47,8 @@ int main(int argc, char const *argv[]){
                 }
                 L[i][j] = A[i][j] - sum1;
                 U[j][i] = A[j][i] - sum2;
-                MPI_Send(&L[i][j], sizeof(double), MPI_DOUBLE, master, n*i + j, MPI_COMM_WORLD);
-                MPI_Send(&U[j][i], sizeof(double), MPI_DOUBLE, master, n*i + j + 1, MPI_COMM_WORLD);
+                MPI_Send(&L[i][j], 1, MPI_DOUBLE, master, n*i + j, MPI_COMM_WORLD);
+                MPI_Send(&U[j][i], 1, MPI_DOUBLE, master, n*i + j + 1, MPI_COMM_WORLD);
             }
         }
         MPI_Bcast(&U[j][j], n-j, MPI_DOUBLE, master, MPI_COMM_WORLD);
@@ -65,7 +64,6 @@ int main(int argc, char const *argv[]){
         }
     }
 
-    printf("here1 %d\n", my_rank);
     if(my_rank == master){
         char out_file[20];
         snprintf(out_file, 20, "output_L_4_%d.txt", comm_size+1);
@@ -74,7 +72,6 @@ int main(int argc, char const *argv[]){
         write_output(out_file, n, U);
     }
 
-    printf("here2 %d\n", my_rank);
     MPI_Finalize();
     
     free(A);
